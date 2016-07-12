@@ -5,7 +5,7 @@ module CepAberto
     let(:request) {described_class.new}
     let(:token) { 'e0651e486d375337f9636417f7bd1f89' }
 
-    before do
+    before :each do
       CepAberto.configure do |config|
         config.token = token
       end
@@ -33,9 +33,10 @@ module CepAberto
       end
 
       context 'without token' do
-        it 'raise invalid token exception' do
+        before do
           CepAberto.reset_configuration
-
+        end
+        it 'raise invalid token exception' do
           expect {
             request.do_request(cep: '85945000')
           }.to raise_error(InvalidToken)

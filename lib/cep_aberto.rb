@@ -1,6 +1,7 @@
 require "cep_aberto/version"
 require "cep_aberto/configuration"
 require "cep_aberto/request"
+require "json"
 
 module CepAberto
   class << self
@@ -18,5 +19,11 @@ module CepAberto
 
   def self.reset_configuration
     @configuration = Configuration.new
+  end
+
+  def self.find_by_cep cep
+    request = Request.new
+
+    JSON.parse(request.do_request(cep: cep))
   end
 end

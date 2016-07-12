@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe CepAberto do
   let(:token) { 'e0651e486d375337f9636417f7bd1f89' }
-
-  before do
+  
+  before :each do
     CepAberto.configure do |config|
       config.token = token
     end
@@ -23,6 +23,14 @@ describe CepAberto do
     end
   end
 
+  describe '#find_by_cep' do
+    it 'find address by cep' do
+      expect(CepAberto.find_by_cep('85945000')).to include(
+        "altitude", "bairro", "cep", "latitude", "longitude", "logradouro", "cidade", "ddd", "ibge", "estado"
+      )
+    end
+  end
+  
   describe '#reset_configuration' do
     it 'reset configs to default' do
       CepAberto.reset_configuration
